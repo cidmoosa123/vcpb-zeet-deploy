@@ -1,27 +1,20 @@
 #!/bin/bash
-
-startfile="/root/startup.sh"
-
-if [ -f $startfile ]
-
-  then
-
-    sh $startfile
-
+if [ $UID -eq 0 ]; then
+user=$1vcpb #Make change here if you changed username
+exec su "$user" "$0" -- "$@"
 fi
+echo "Please, make a password for your vncserver"
+echo "Your password should contain atleast 6 characters and maximum of 8"
+read passwd
+echo "your vncpassword is $passwd!"
+user="vcpb"
+mkdir /home/$user/.vnc
+echo $passwd | vncpasswd -f > /home/$user/.vnc/passwd
+chown -R $user:$user /home/$user/.vnc
+chmod 0600 /home/$user/.vnc/passwd
+vncserver
+vncserver -kill :1
+mv ~/.vnc/xstartup ~/.vnc/xstartup.bak
+mv /home/xstartup ~/.vnc/xstartup
 
-echo "export QT_XKB_CONFIG_ROOT=/usr/share/X11/locale" >> /etc/profile
-
-# Create the PrivSep empty dir if necessary
-
-if [ ! -d /run/sshd ]; then
-
-   mkdir /run/sshd
-
-   chmod 0755 /run/sshd
-
-fi
-
-#This has to be the last command!
-
-/usr/bin/supervisord -n
+vncserver

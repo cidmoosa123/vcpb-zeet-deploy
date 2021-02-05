@@ -8,7 +8,7 @@ else
    ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime
    dpkg-reconfigure -f noninteractive tzdata
 fi
-chmod +x /xrdp-start.sh
+chmod +x /vnc-start.sh
 
 # Format of the list of users
 # separated by newline

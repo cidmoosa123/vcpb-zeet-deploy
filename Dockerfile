@@ -30,8 +30,6 @@ RUN apt-get update -y && \
 COPY autostartup.sh /root/
 COPY __init__.py /home/__init__.py
 COPY script.sh /home/
-COPY ml1.yml /home/vcbot/strings/
-COPY text.png /home/vcbot/assets/png/
 COPY vnc-start.sh /vnc-start.sh
 COPY xstartup /home/
 COPY createusers.txt /root/
